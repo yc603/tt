@@ -27,14 +27,34 @@ transform:scale(1);
 pointer-events:auto;
 }
 
-/* ======================
-第二幕：居中选项
-====================== */
+/* ===== 高级按钮 ===== */
+button{
+padding:12px 22px;
+border:none;
+border-radius:14px;
+font-size:16px;
+cursor:pointer;
+
+background:linear-gradient(135deg,#ff7eb3,#ff758c);
+color:white;
+
+box-shadow:0 8px 20px rgba(255,80,120,0.3);
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+button:active{
+transform:scale(0.95);
+}
+
+/* ===== 第二幕选项居中 ===== */
 label{
 display:flex;
 justify-content:center;
 align-items:center;
-text-align:center;
 padding:12px;
 margin:10px;
 border:1px solid #fff;
@@ -42,33 +62,29 @@ border-radius:10px;
 cursor:pointer;
 }
 
-/* ======================
-蛋糕3D
-====================== */
+/* ===== 3D蛋糕 ===== */
 #cake3d canvas{
 width:300px !important;
 height:300px !important;
 }
 
-/* ======================
-信封
-====================== */
+/* ===== 信封 ===== */
 .envelope{
 width:260px;
 height:180px;
 background:#f5e6d3;
+border-radius:10px;
 position:relative;
-border-radius:8px;
 overflow:hidden;
 }
 
-/* 红色蜡封 */
+/* 蜡封 */
 .seal{
 position:absolute;
 top:10px;
 left:50%;
 transform:translateX(-50%);
-font-size:30px;
+font-size:32px;
 cursor:pointer;
 z-index:3;
 }
@@ -79,8 +95,8 @@ position:absolute;
 bottom:0;
 width:100%;
 height:80%;
-background:white;
-color:black;
+background:#fff;
+color:#000;
 border-radius:10px 10px 0 0;
 transform:translateY(100%);
 transition:0.8s;
@@ -88,14 +104,11 @@ overflow-y:auto;
 padding:15px;
 }
 
-/* 打开后纸弹出一半 */
 .envelope.open .paper{
 transform:translateY(40%);
 }
 
-/* ======================
-第五幕照片
-====================== */
+/* ===== 照片雨 ===== */
 .photos{
 position:absolute;
 width:100%;
@@ -134,5 +147,4 @@ z-index:10;
 .postcard-back{
 color:white;
 text-align:center;
-padding:10px;
 }
