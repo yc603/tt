@@ -3,8 +3,13 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>生日祝福</title>
+<title>生日礼物</title>
+
 <link rel="stylesheet" href="style.css">
+
+<!-- 🎂 WebGL 3D库 -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
 </head>
 
 <body>
@@ -15,37 +20,34 @@
 <button onclick="go(2)">进入</button>
 </div>
 
-<!-- 第二幕 -->
+<!-- 第二幕：答题 -->
 <div class="page" id="p2">
-<h2 id="qtitle">答题挑战</h2>
+<h2 id="qtitle"></h2>
 <div id="options"></div>
-<button id="submitBtn" onclick="check()">确认答案</button>
 </div>
 
-<!-- 第三幕 -->
+<!-- 第三幕：3D蛋糕 -->
 <div class="page" id="p3">
-<div class="cake">
-<div class="layer"></div>
-<div class="layer"></div>
-<div class="layer"></div>
-<div class="candle"><div class="flame"></div></div>
-</div>
-
+<div id="cake3d"></div>
 <h2>🎂 生日快乐</h2>
 <button onclick="go(4)">继续</button>
 </div>
 
-<!-- 第四幕 -->
+<!-- 第四幕：信封 -->
 <div class="page" id="p4">
-<img src="img1.jpg" class="main-img"/>
 
-<div class="envelope" onclick="openEnv()" id="env"></div>
-<div class="letter" id="letter"></div>
+<div class="env" onclick="openEnvelope()" id="env">
+<div class="flap"></div>
+<div class="body"></div>
+</div>
+
+<div class="paper" id="paper">生日快乐 🎉</div>
+
 </div>
 
 <!-- 第五幕 -->
 <div class="page" id="p5">
-<h2>生日快乐 🎉</h2>
+<h2>🎉 祝福</h2>
 <button onclick="go(6)">继续</button>
 </div>
 
