@@ -19,7 +19,6 @@ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
 document.getElementById('p'+n).classList.add('active');
 
 if(n===2) loadQ();
-if(n===5) rain();
 }
 
 /* 加载题目 */
@@ -29,11 +28,12 @@ let q = questions[qIndex];
 document.getElementById("qtitle").innerText =
 "第 " + (qIndex+1) + " 题：" + q.q;
 
-let html="";
+let html = "";
+
 q.options.forEach(opt=>{
 html += `
-<label>
-<input type="radio" name="opt" value="${opt}">
+<label onclick="selectAnswer(this,'${opt}')">
+<input type="radio" name="opt" style="display:none">
 ${opt}
 </label>
 `;
@@ -42,48 +42,62 @@ ${opt}
 document.getElementById("options").innerHTML = html;
 }
 
-/* 检查答案 */
-function check(){
-let selected = document.querySelector('input[name="opt"]:checked');
-let btn = document.getElementById("submitBtn");
+/* ⭐ 点击即判定 */
+function selectAnswer(el,value){
 
-if(!selected){
-alert("请选择答案");
-return;
-}
+let correct = questions[qIndex].answer;
 
-if(selected.value === questions[qIndex].answer){
-btn.style.background="green";
-btn.innerText="正确";
+/* 防止重复点击 */
+if(document.querySelector(".locked")) return;
+document.getElementById("options").classList.add("locked");
+
+if(value === correct){
+
+el.classList.add("correct");
 
 setTimeout(()=>{
+nextQ();
+},600);
+
+}else{
+
+el.classList.add("wrong");
+
+/* 标出正确答案 */
+setTimeout(()=>{
+document.querySelectorAll("label").forEach(l=>{
+if(l.innerText.trim() === correct){
+l.classList.add("correct");
+}
+});
+},300);
+
+setTimeout(()=>{
+nextQ();
+},1200);
+}
+}
+
+/* 下一题 */
+function nextQ(){
+
 qIndex++;
-if(qIndex>=questions.length){
+
+document.getElementById("options").classList.remove("locked");
+
+if(qIndex >= questions.length){
 go(3);
 }else{
-btn.style.background="";
-btn.innerText="确认答案";
 loadQ();
 }
-},500);
-
-}else{
-btn.style.background="red";
-btn.innerText="错误";
-
-setTimeout(()=>{
-btn.style.background="";
-btn.innerText="确认答案";
-},500);
-}
 }
 
-/* 信封动画 */
+/* 信封 */
 function openEnv(){
 document.getElementById("env").classList.add("open");
 let l=document.getElementById("letter");
 l.style.display="block";
-type(l,"生日快乐 💌 愿你每天开心");
+type(l,"生日快乐 💌 愿你每天开心幸福");
 }
 
 /* 打字 */
@@ -95,16 +109,4 @@ el.innerHTML+=text[i];
 i++;
 if(i>=text.length) clearInterval(t);
 },60);
-}
-
-/* 瀑布 */
-function rain(){
-for(let i=0;i<20;i++){
-let d=document.createElement("div");
-d.innerHTML="📷";
-d.style.position="absolute";
-d.style.left=Math.random()*100+"vw";
-d.style.animation="fall 4s linear infinite";
-document.body.appendChild(d);
-}
 }
