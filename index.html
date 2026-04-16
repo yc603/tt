@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>生日祝福</title>
+
+<style>
+body{
+margin:0;
+font-family: "Arial";
+background:#000;
+color:#fff;
+overflow:hidden;
+text-align:center;
+}
+
+.page{
+display:none;
+height:100vh;
+width:100vw;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+padding:20px;
+}
+
+.active{display:flex;}
+
+button{
+padding:12px 20px;
+margin-top:20px;
+border:none;
+border-radius:10px;
+font-size:16px;
+}
+
+.btn{background:#fff;color:#000;}
+.correct{background:green;color:#fff;}
+.wrong{background:red;color:#fff;}
+
+input{
+padding:10px;
+font-size:16px;
+margin-top:10px;
+width:80%;
+max-width:300px;
+}
+
+.card{
+background:white;
+color:black;
+padding:20px;
+border-radius:15px;
+}
+
+.fade{
+animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0}
+to{opacity:1}
+}
+</style>
+</head>
+
+<body>
+
+<!-- 第一幕 -->
+<div class="page active" id="p1">
+<h1>欢迎，等你很久了~</h1>
+<button class="btn" onclick="go(2)">点击进入</button>
+<audio id="bgm" loop>
+<source src="music.mp3" type="audio/mp3">
+</audio>
+</div>
+
+<!-- 第二幕 -->
+<div class="page" id="p2">
+<h2 id="q">问题1：1+1=？</h2>
+<input id="ans" placeholder="输入答案"/>
+<button class="btn" onclick="check()">提交</button>
+</div>
+
+<!-- 第三幕 -->
+<div class="page" id="p3">
+<h2>🎂 蛋糕生成中...</h2>
+<div id="cake"></div>
+<button class="btn" onclick="go(4)">吹蜡烛</button>
+</div>
+
+<!-- 第四幕 -->
+<div class="page" id="p4">
+<img src="img1.jpg" style="width:80%;border-radius:15px"/>
+<div class="card" onclick="openLetter()">
+🔐 点击蜡封
+</div>
+<div id="letter" style="display:none;margin-top:10px;"></div>
+</div>
+
+<!-- 第五幕 -->
+<div class="page" id="p5">
+<div class="card">
+<img src="img1.jpg" style="width:100%;border-radius:10px"/>
+<p>生日快乐 🎉</p>
+</div>
+<div id="rain"></div>
+<button class="btn" onclick="go(6)">继续</button>
+</div>
+
+<!-- 第六幕 -->
+<div class="page" id="p6">
+<video controls width="90%">
+<source src="video.mp4" type="video/mp4">
+</video>
+<h2>🎉 生日快乐！</h2>
+</div>
+
+<script>
+
+let page = 1;
+let qIndex = 0;
+
+const questions = [
+{q:"1+1=?",a:"2"},
+{q:"2+2=?",a:"4"},
+{q:"3+3=?",a:"6"},
+{q:"4+4=?",a:"8"},
+{q:"5+5=?",a:"10"},
+{q:"6+6=?",a:"12"},
+{q:"7+7=?",a:"14"},
+{q:"8+8=?",a:"16"},
+{q:"9+9=?",a:"18"},
+{q:"10+10=?",a:"20"}
+];
+
+function go(n){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById('p'+n).classList.add('active');
+page=n;
+
+if(n===1){
+document.getElementById('bgm').play();
+}
+
+if(n===2){
+loadQ();
+}
+
+if(n===3){
+cakeAnim();
+}
+
+if(n===5){
+rain();
+}
+}
+
+function loadQ(){
+document.getElementById("q").innerText = "问题"+(qIndex+1)+"："+questions[qIndex].q;
+document.getElementById("ans").value="";
+}
+
+function check(){
+let val=document.getElementById("ans").value;
+let btn=document.querySelector("#p2 .btn");
+
+if(val==questions[qIndex].a){
+btn.classList.add("correct");
+btn.classList.remove("wrong");
+
+setTimeout(()=>{
+btn.classList.remove("correct");
+qIndex++;
+if(qIndex>=10){
+go(3);
+}else{
+loadQ();
+}
+},500);
+
+}else{
+btn.classList.add("wrong");
+}
+}
+
+function cakeAnim(){
+let c=document.getElementById("cake");
+c.innerHTML="";
+let i=0;
+let t=setInterval(()=>{
+if(i>5){clearInterval(t);return;}
+let d=document.createElement("div");
+d.innerHTML="🍰";
+d.style.fontSize=(20+i*10)+"px";
+c.appendChild(d);
+i++;
+},300);
+}
+
+function openLetter(){
+let l=document.getElementById("letter");
+l.style.display="block";
+typeText(l,"生日快乐！愿你每天都开心幸福 💖");
+}
+
+function typeText(el,text){
+el.innerHTML="";
+let i=0;
+let t=setInterval(()=>{
+el.innerHTML+=text[i];
+i++;
+if(i>=text.length)clearInterval(t);
+},80);
+}
+
+function rain(){
+let r=document.getElementById("rain");
+for(let i=0;i<20;i++){
+let img=document.createElement("div");
+img.innerHTML="📷";
+img.style.position="absolute";
+img.style.left=Math.random()*100+"vw";
+img.style.animation="fall 5s linear infinite";
+document.body.appendChild(img);
+}
+}
+
+</script>
+
+<style>
+@keyframes fall{
+0%{transform:translateY(-100px);opacity:1}
+100%{transform:translateY(100vh);opacity:0}
+}
+</style>
+
+</body>
+</html>
