@@ -6,7 +6,6 @@ color:#fff;
 overflow:hidden;
 }
 
-/* 页面切换 */
 .page{
 position:absolute;
 width:100vw;
@@ -27,7 +26,6 @@ transform:scale(1);
 pointer-events:auto;
 }
 
-/* 按钮 */
 button{
 padding:12px 18px;
 border:none;
@@ -35,52 +33,35 @@ border-radius:10px;
 margin-top:10px;
 }
 
-/* ===== 3D蛋糕 ===== */
-.cake{
-animation:float 3s infinite ease-in-out;
-}
-
-.layer{
-width:160px;
-height:40px;
-background:pink;
-margin:5px auto;
+/* 选项 */
+label{
+display:block;
+padding:12px;
+margin:10px;
+border:1px solid #fff;
 border-radius:10px;
-box-shadow:0 10px 20px rgba(0,0,0,0.4);
-transform:rotateX(20deg);
+cursor:pointer;
+transition:0.3s;
 }
 
-@keyframes float{
-0%,100%{transform:translateY(0)}
-50%{transform:translateY(-10px)}
+/* 正确/错误状态 */
+.correct{
+background:green !important;
+color:white !important;
 }
 
-/* 蜡烛 */
-.candle{
-width:10px;
-height:40px;
-background:yellow;
-margin:10px auto;
-position:relative;
+.wrong{
+background:red !important;
+color:white !important;
 }
 
-.flame{
-width:12px;
-height:12px;
-background:orange;
-border-radius:50%;
-position:absolute;
-top:-14px;
-left:-1px;
-animation:flame 0.3s infinite alternate;
+/* 图片 */
+.main-img{
+width:80%;
+border-radius:10px;
 }
 
-@keyframes flame{
-from{transform:scale(1);opacity:1}
-to{transform:scale(1.3);opacity:0.6}
-}
-
-/* ===== 信封 ===== */
+/* 信封 */
 .envelope{
 width:200px;
 height:120px;
@@ -88,7 +69,6 @@ background:#fff;
 margin-top:20px;
 position:relative;
 cursor:pointer;
-transition:1s;
 }
 
 .envelope:before{
@@ -113,25 +93,5 @@ background:#fff;
 color:#000;
 padding:15px;
 margin-top:10px;
-border-radius:10px;
-}
-
-/* 单选题 */
-label{
-display:block;
-padding:10px;
-margin:10px;
-border:1px solid #fff;
-border-radius:10px;
-}
-
-/* 视频 */
-video{
-width:90%;
-}
-
-/* 图片 */
-.main-img{
-width:80%;
 border-radius:10px;
 }
