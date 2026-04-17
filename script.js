@@ -74,34 +74,48 @@ renderer.setSize(300,300);
 document.getElementById("cake3d").innerHTML="";
 document.getElementById("cake3d").appendChild(renderer.domElement);
 
-/* 蛋糕 */
-const cake = new THREE.Mesh(
-new THREE.CylinderGeometry(1.2,1.2,2,32),
-new THREE.MeshBasicMaterial({color:0xffc0cb})
-);
-scene.add(cake);
+/* ===== 三层蛋糕 ===== */
+const material1 = new THREE.MeshPhongMaterial({color:0xffb6c1});
+const material2 = new THREE.MeshPhongMaterial({color:0xff69b4});
+const material3 = new THREE.MeshPhongMaterial({color:0xff85a2});
+
+const layer1 = new THREE.Mesh(new THREE.CylinderGeometry(1.5,1.5,0.8,32), material1);
+const layer2 = new THREE.Mesh(new THREE.CylinderGeometry(1.1,1.1,0.7,32), material2);
+const layer3 = new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,0.6,32), material3);
+
+layer2.position.y = 0.8;
+layer3.position.y = 1.5;
+
+scene.add(layer1, layer2, layer3);
 
 /* 蜡烛 */
 const candle = new THREE.Mesh(
-new THREE.CylinderGeometry(0.05,0.05,1,16),
+new THREE.CylinderGeometry(0.08,0.08,0.6,16),
 new THREE.MeshBasicMaterial({color:0xffffff})
 );
-candle.position.y = 1.5;
+candle.position.y = 2;
 scene.add(candle);
 
 /* 火焰 */
 flame = new THREE.Mesh(
-new THREE.SphereGeometry(0.1,16,16),
+new THREE.SphereGeometry(0.12,16,16),
 new THREE.MeshBasicMaterial({color:0xff6600})
 );
-flame.position.y = 2.1;
+flame.position.y = 2.5;
 scene.add(flame);
+
+/* 灯光（让蛋糕更立体） */
+const light = new THREE.PointLight(0xffffff,1);
+light.position.set(5,5,5);
+scene.add(light);
 
 camera.position.z = 5;
 
 function animate(){
 requestAnimationFrame(animate);
-cake.rotation.y += 0.01;
+layer1.rotation.y += 0.005;
+layer2.rotation.y += 0.005;
+layer3.rotation.y += 0.005;
 renderer.render(scene,camera);
 }
 animate();
@@ -117,23 +131,31 @@ setTimeout(()=>go(4),1000);
 
 /* ===== 信封 ===== */
 function openEnvelope(){
-document.getElementById("env").classList.add("open");
-
+go(6);
 typeLetter();
 }
 
 /* 打字信 */
 function typeLetter(){
-let text="生日快乐 🎉\n愿你被世界温柔以待\n愿你所有愿望实现";
-let el=document.getElementById("letterText");
+
+let text = "祝你生日快乐 🎂\n愿你每天都开心\n愿所有美好都属于你 💖";
+
+let el = document.getElementById("letterText");
+let btn = document.getElementById("nextBtn");
 
 el.innerHTML="";
+btn.style.display="none";
+
 let i=0;
 
 let t=setInterval(()=>{
 el.innerHTML += text[i]==="\n" ? "<br>" : text[i];
 i++;
-if(i>=text.length) clearInterval(t);
+
+if(i>=text.length){
+clearInterval(t);
+btn.style.display="inline-block";
+}
 },60);
 }
 
