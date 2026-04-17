@@ -254,3 +254,19 @@ i++;
 if(i>=text.length) clearInterval(t);
 },200);
 }
+
+window.onload = function(){
+
+document.getElementById("startBtn").addEventListener("click",function(){
+
+go(2);
+
+let music = document.getElementById("bgm");
+
+if(music){
+music.play().catch(()=>{});
+}
+
+});
+
+};
