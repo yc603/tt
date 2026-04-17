@@ -280,62 +280,47 @@ btn.style.display="inline-block";
 }
 
 /* ===== 第五幕 ===== */
-function startPhotos(){
-
-let old = document.querySelector(".photos");
-if(old) old.remove();
-
-const wrap = document.createElement("div");
-wrap.className = "photos";
-document.getElementById("p5").appendChild(wrap);
-
-/* 50张照片 */
-const photos = [
-"img/1.jpg","2.jpg","3.jpg","4.jpg","5.jpg",
-"6.jpg","7.jpg","8.jpg","9.jpg","10.jpg",
-"11.jpg","12.jpg","13.jpg","14.jpg","15.jpg",
-"16.jpg","17.jpg","18.jpg","19.jpg","20.jpg",
-"21.jpg","22.jpg","23.jpg","24.jpg","25.jpg",
-"26.jpg","27.jpg","28.jpg","29.jpg","30.jpg",
-"31.jpg","32.jpg","33.jpg","34.jpg","35.jpg",
-"36.jpg","37.jpg","38.jpg","39.jpg","40.jpg",
-"41.jpg","42.jpg","43.jpg","44.jpg","45.jpg",
-"46.jpg","47.jpg","48.jpg","49.jpg","50.jpg"
+let photos = [
+"img/1.jpg","img/2.jpg","img/3.jpg","img/4.jpg","img/5.jpg",
+"img/6.jpg","img/7.jpg","img/8.jpg","img/9.jpg","img/10.jpg",
+"img/11.jpg","img/12.jpg","img/13.jpg","img/14.jpg","img/15.jpg",
+"img/16.jpg","img/17.jpg","img/18.jpg","img/19.jpg","img/20.jpg",
+"img/21.jpg","img/22.jpg","img/23.jpg","img/24.jpg","img/25.jpg",
+"img/26.jpg","img/27.jpg","img/28.jpg","img/29.jpg","img/30.jpg",
+"img/31.jpg","img/32.jpg","img/33.jpg","img/34.jpg","img/35.jpg",
+"img/36.jpg","img/37.jpg","img/38.jpg","img/39.jpg","img/40.jpg",
+"img/41.jpg","img/42.jpg","img/43.jpg","img/44.jpg","img/45.jpg",
+"img/46.jpg","img/47.jpg","img/48.jpg","img/49.jpg","img/50.jpg"
 ];
 
-/* 掉落50张 */
-for(let i=0;i<50;i++){
+let photoIndex = 0;
 
-let box = document.createElement("div");
-box.className = "photo";
-
-box.style.left = Math.random()*100 + "vw";
-box.style.animationDuration = (6 + Math.random()*5)+"s";
-box.style.animationDelay = (Math.random()*4)+"s";
-box.style.transform = `rotate(${Math.random()*40-20}deg)`;
-
-box.innerHTML = `
-<div class="photo-inner"
-style="background-image:url('images/${photos[i]}')">
-</div>
-`;
-
-wrap.appendChild(box);
+function startPhotos(){
+    photoIndex = 0;
+    showPhoto();
 }
 
-/* 打字 */
-let text="生日快乐🎂\n绿老头🥸";
-let el=document.getElementById("typeText");
+function showPhoto(){
+    let img = document.getElementById("photoView");
+    let indexText = document.getElementById("photoIndex");
 
-let n=0;
-el.innerHTML="";
+    img.style.opacity = 0;
 
-let t=setInterval(()=>{
-el.innerHTML += text[n]==="\n" ? "<br>" : text[n];
-n++;
-if(n>=text.length) clearInterval(t);
-},120);
+    setTimeout(()=>{
+        img.src = photos[photoIndex];
+        img.style.opacity = 1;
+        indexText.innerText = (photoIndex+1) + " / " + photos.length;
+    },200);
+}
 
+function nextPhoto(){
+    photoIndex = (photoIndex + 1) % photos.length;
+    showPhoto();
+}
+
+function prevPhoto(){
+    photoIndex = (photoIndex - 1 + photos.length) % photos.length;
+    showPhoto();
 }
 
 window.onload = function(){
