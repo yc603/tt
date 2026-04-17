@@ -202,7 +202,7 @@ setTimeout(()=>go(4),1000);
 /* ===== 信封 ===== */
 function openEnvelope(){
 go(6);
-typeLetter();
+setTimeout(typeLetter,300);
 }
 
 /* 打字信 */
