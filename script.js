@@ -1,345 +1,62 @@
-let qIndex = 0;
+let current = 1;
 
-/* ===== 题库 ===== */
-const questions = [
-{q:"我们是怎么认识的？", options:["上班🐄","实习🐎","搭讪😏","打乒乓球🏓","上课📖"], answer:"搭讪😏"},
-{q:"我们认识的日期？", options:["6月12日","6月3日","4月17日","6月14日","不记得🤯"], answer:"不记得🤯"},
-{q:"我们在中国最常吃的食物是？", options:["螺狮粉","臭豆腐","姥姥下碗面","烧仙草","清汤粉"], answer:"螺狮粉"},
-{q:"回来马来西亚后我们吃的第一家餐厅是？", options:["太二酸菜鱼","中国兰州拉面","Mr Wu","Uno Sushi","Shin Zushi"], answer:"Uno Sushi"},
-{q:"你陪我打游戏玩到凌晨的地方是？", options:["福州","龙岩","厦门","赣州","泉州"], answer:"龙岩"},
-{q:"我们一起去过哪里旅行？", options:["泉州","厦门","漳州","福州","赣州"], answer:"赣州"},
-{q:"你放工后最想干嘛？", options:["直奔老巢","跟我一起玩","看Netflix","啥也不干","狠狠睡觉"], answer:"跟我一起玩"},
-{q:"臭豆腐有几种口味？", options:["15","13","10","9","7"], answer:"15"},
-{q:"白羊座跟哪个星座最合拍？", options:["白羊座♈","双子座♊","金牛座♉","水瓶座♒","射手座♐"], answer:"双子座♊"},
-{q:"你最喜欢跟谁玩？", options:["晴"], answer:"晴"}
-];
-
-/* ===== 页面切换 ===== */
+/* 页面切换 */
 function go(n){
+document.querySelectorAll(".page")
+.forEach(p => p.classList.remove("active"));
 
-/* 先切页 */
-document.querySelectorAll('.page').forEach(p=>{
-p.classList.remove('active');
-});
-
-document.getElementById('p'+n).classList.add('active');
-
-/* 再播放音乐（失败也不中断） */
-if(n === 2){
-let music = document.getElementById("bgm");
-
-if(music){
-music.play().catch(err=>{
-console.log("音乐播放失败，但不影响跳转");
-});
-}
+document.getElementById("p"+n).classList.add("active");
+current = n;
 }
 
-/* 各页面功能 */
-if(n === 2){
-loadQ();
-}
-
-if(n === 3){
-initCake3D();
-}
-
-if(n === 5){
-startPhotos();
-}
-}
-
-/* ===== 第二幕 ===== */
-function loadQ(){
-let q = questions[qIndex];
-
-document.getElementById("qtitle").innerText =
-"第 " + (qIndex+1) + " 题：" + q.q;
-
-let html="";
-
-q.options.forEach(opt=>{
-html += `<label onclick="check(this,'${opt}')">${opt}</label>`;
-});
-
-document.getElementById("options").innerHTML = html;
-}
-
-function check(el,val){
-let correct = questions[qIndex].answer;
-
-if(val !== correct){
-el.style.background="red";
-setTimeout(()=>el.style.background="",400);
-return;
-}
-
-el.style.background="green";
-
-setTimeout(()=>{
-qIndex++;
-if(qIndex>=questions.length){
-go(3);
-}else{
-loadQ();
-}
-},500);
-}
-
-/* ===== 3D蛋糕 ===== */
-let flame;
-
-function initCake3D(){
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75,1,0.1,1000);
-const renderer = new THREE.WebGLRenderer({alpha:true, antialias:true});
-renderer.setSize(300,300);
-
-document.getElementById("cake3d").innerHTML="";
-document.getElementById("cake3d").appendChild(renderer.domElement);
-
-/* 光线 */
-const light = new THREE.PointLight(0xffffff,1.2);
-light.position.set(3,5,5);
-scene.add(light);
-
-const ambient = new THREE.AmbientLight(0xffffff,0.8);
-scene.add(ambient);
-
-/* ===== 蛋糕底层（粉色） ===== */
-const layer1 = new THREE.Mesh(
-new THREE.CylinderGeometry(1.4,1.4,0.8,32),
-new THREE.MeshPhongMaterial({color:0xff8fb1})
-);
-layer1.position.y = -0.8;
-scene.add(layer1);
-
-/* ===== 中层（黄色） ===== */
-const layer2 = new THREE.Mesh(
-new THREE.CylinderGeometry(1.1,1.1,0.7,32),
-new THREE.MeshPhongMaterial({color:0xff9466})
-);
-layer2.position.y = 0;
-scene.add(layer2);
-
-/* ===== 顶层（蓝色） ===== */
-const layer3 = new THREE.Mesh(
-new THREE.CylinderGeometry(0.8,0.8,0.6,32),
-new THREE.MeshPhongMaterial({color:0xd2ff66})
-);
-layer3.position.y = 0.75;
-scene.add(layer3);
-
-/* ===== 彩色奶油球装饰 ===== */
-const creamColors = [
-0xff4d6d, // 红
-0xffd166, // 黄
-0x06d6a0, // 绿
-0x118ab2, // 蓝
-0xffffff  // 白
-];
-
-for(let i=0;i<10;i++){
-
-const ball = new THREE.Mesh(
-new THREE.SphereGeometry(0.08,16,16),
-new THREE.MeshPhongMaterial({
-color: creamColors[i % creamColors.length]
-})
-);
-
-let angle = (i / 10) * Math.PI * 2;
-ball.position.x = Math.cos(angle) * 0.7;
-ball.position.z = Math.sin(angle) * 0.7;
-ball.position.y = 1.1;
-
-scene.add(ball);
-}
-
-/* ===== 蜡烛 ===== */
-const candle = new THREE.Mesh(
-new THREE.CylinderGeometry(0.06,0.06,0.6,16),
-new THREE.MeshPhongMaterial({color:0xffffff})
-);
-candle.position.y = 1.55;
-scene.add(candle);
-
-/* ===== 火焰 ===== */
-flame = new THREE.Mesh(
-new THREE.SphereGeometry(0.09,16,16),
-new THREE.MeshBasicMaterial({color:0xff6600})
-);
-flame.position.y = 1.95;
-scene.add(flame);
-
-camera.position.z = 5;
-
-/* 动画 */
-function animate(){
-requestAnimationFrame(animate);
-
-layer1.rotation.y += 0.005;
-layer2.rotation.y += 0.005;
-layer3.rotation.y += 0.005;
-
-flame.scale.y = 1 + Math.sin(Date.now()*0.01)*0.15;
-
-renderer.render(scene,camera);
-}
-
-animate();
-}
+/* 音乐点击播放（浏览器限制） */
+document.addEventListener("click", () => {
+document.getElementById("bgm").play();
+}, { once:true });
 
 /* 吹蜡烛 */
 function blowCandle(){
-flame.material.opacity = 0;
-flame.visible = false;
-
-setTimeout(()=>go(4),1000);
+alert("蜡烛吹灭✨愿望实现！");
+go(4);
 }
 
-/* ===== 信封 ===== */
+/* 打开信封 */
 function openEnvelope(){
-go(6);
-setTimeout(typeLetter,300);
+go(5);
+
+document.getElementById("letterText").innerText =
+"生日快乐🎂\n愿你每天都开心✨\n好运一直在你身边。";
+
+setTimeout(()=>{
+document.getElementById("nextBtn").style.display="block";
+},2000);
 }
 
-/* 打字信 */
-function typeLetter(){
+/* 翻明信片 */
+function flipCard(){
+document.getElementById("card").classList.toggle("flipped");
 
-let text = "2026年4月17日，本人一边修改代码一边躲避老板的目光，要是被抓现行就完犊子了😵。不过放心，本人不会允许这种事情发生✋🏿，我可是很谨慎的人😏\n祝你生日快乐🎂\n谢谢你一直这么包容我\n愿你每天都开心💖\n很可惜今天不能陪你过生日，虽然可能也没有很可惜😯~但是我的心意还是有的，请务必查收✉";
-
-let el = document.getElementById("letterText");
-let btn = document.getElementById("nextBtn");
-
-el.innerHTML="";
-btn.style.display="none";
-
-let i=0;
-
-let t=setInterval(()=>{
-el.innerHTML += text[i]==="\n" ? "<br>" : text[i];
-i++;
-
-if(i>=text.length){
-clearInterval(t);
-btn.style.display="inline-block";
-}
-},60);
+document.getElementById("typeText").innerText =
+"谢谢你来到这里💌";
 }
 
-/* ===== 第五幕 ===== */
-function startPhotos(){
-
+/* 照片雨 */
 const photos = [
-"20240727_130322.jpg",
-"20240818_132518.jpg",
-"20240907_205644.jpg",
-"20240907_235227.jpg",
-"20240909_200049.jpg",
-"20240914_113829.jpg",
-"20241018_202940.jpg",
-"20241220_200700.jpg",
-"20250126_174251.jpg",
-"20250127_193111.jpg",
-"20250206_190009.jpg",
-"20250207_172235.jpg",
-"20251207_194940.jpg",
-"20251224_171436.jpg",
-"20260105_203814.jpg",
-"20260112_171618.jpg",
-"20260112_181833.jpg",
-"20260112_201412.jpg",
-"20260113_131013.jpg",
-"20260118_182744.jpg",
-"20260118_182746.jpg",
-"20260207_145740.jpg",
-"20260207_150133.jpg",
-"20260207_210353.jpg",
-"20260207_212717.jpg",
-"20260207_230449.jpg",
-"20260208_124502.jpg",
-"20260209_162402.jpg",
-"20260213_193541.jpg",
-"mmexport1722070734506.jpg",
-"mmexport1737202191699.jpg",
-"wx_camera_1767493228878.jpg"
+"images/20240727_130322.jpg",
+"images/20240818_132518.jpg"
 ];
 
-const wrap = document.getElementById("photos");
+function startPhotos(){
+const box = document.getElementById("photos");
 
-/* 防止重复进入时越堆越多 */
-wrap.innerHTML = "";
-
-/* 掉落数量 */
-for(let i=0;i<35;i++){
-
-let d = document.createElement("div");
-d.className = "photo";
-
-/* 随机照片 */
-let randomImg = photos[Math.floor(Math.random()*photos.length)];
-d.style.backgroundImage = `url('${randomImg}')`;
-
-/* 随机位置 */
-d.style.left = Math.random()*100 + "vw";
-
-/* 随机大小 */
-let size = 55 + Math.random()*45;
-d.style.width = size + "px";
-d.style.height = size + "px";
-
-/* 随机速度 */
-d.style.animationDuration = (4 + Math.random()*5) + "s";
-
-/* 随机延迟 */
-d.style.animationDelay = (Math.random()*5) + "s";
-
-/* 随机旋转角度 */
-d.style.transform = `rotate(${Math.random()*360}deg)`;
-
-wrap.appendChild(d);
+for(let i=0;i<20;i++){
+let img = document.createElement("div");
+img.className="photo";
+img.style.left=Math.random()*100+"%";
+img.style.animationDuration=(3+Math.random()*5)+"s";
+img.style.backgroundImage=`url(${photos[i%photos.length]})`;
+box.appendChild(img);
+}
 }
 
-/* 打字 */
-let text="生日快乐🎂\n绿老头🥸";
-let el=document.getElementById("typeText");
-
-let i=0;
-el.innerHTML="";
-
-let t=setInterval(()=>{
-el.innerHTML += text[i];
-i++;
-if(i>=text.length) clearInterval(t);
-},120);
-}
-
-window.onload = function(){
-
-/* 进入按钮 */
-document.getElementById("startBtn").addEventListener("click",function(){
-go(2);
-
-let music = document.getElementById("bgm");
-if(music){
-music.play().catch(()=>{});
-}
-});
-
-/* 明信片点击 */
-const card = document.getElementById("card");
-
-if(card){
-card.addEventListener("click", function(){
-
-if(!card.classList.contains("flipped")){
-card.classList.add("flipped");
-typeLetter();
-}
-
-});
-}
-
-};
+startPhotos();
