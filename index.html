@@ -14,73 +14,63 @@
 <audio id="bgm" loop>
 <source src="music.mp3" type="audio/mpeg">
 </audio>
-  
+
 <!-- 第一幕 -->
 <div class="page active" id="p1">
 <h1>你来了寿星，等你很久了~</h1>
-<button id="startBtn">进入考验环节</button>
+<button onclick="go(2)">进入考验环节</button>
 </div>
 
 <!-- 第二幕 -->
 <div class="page" id="p2">
-<h2 id="qtitle"></h2>
+<h2 id="qtitle">准备好了吗？</h2>
 <div id="options"></div>
 </div>
 
 <!-- 第三幕 -->
 <div class="page" id="p3">
 <div id="cake3d"></div>
-<h2>🎂许个愿吧，这个蛋糕生得不容易🎂</h2>
+<h2>🎂许个愿吧🎂</h2>
 <button onclick="blowCandle()">吹蜡烛🎂</button>
 </div>
 
 <!-- 第四幕 -->
 <div class="page" id="p4">
-
-<div class="envelope" id="env">
+<div class="envelope">
 <div class="seal" onclick="openEnvelope()">😏</div>
 </div>
-
 </div>
 
-<!-- 新增：信纸页面 -->
-<div class="page" id="p6">
-
+<!-- 第五幕：信纸 -->
+<div class="page" id="p5">
 <div class="letter-page">
-<div class="letter-paper">
-<div id="letterText"></div>
-</div>
+<div class="letter-paper" id="letterText"></div>
 
-<button id="nextBtn" onclick="go(5)" style="display:none;margin-top:20px;">
+<button id="nextBtn" onclick="go(6)" style="display:none;">
 继续探索 ✨
 </button>
 
 </div>
-
 </div>
-<!-- 第五幕 -->
-<div class="page" id="p5">
+
+<!-- 第六幕：照片 + 明信片 -->
+<div class="page" id="p6">
 
 <div class="photos" id="photos"></div>
 
-<!-- 💌 新版翻面明信片 -->
 <div class="postcard-container">
+<div class="postcard" id="card" onclick="flipCard()">
 
-<div class="postcard" id="card">
-
-<!-- 正面 -->
 <div class="card-face card-front">
 <h2>💌</h2>
 <p>点击翻开</p>
 </div>
 
-<!-- 背面 -->
 <div class="card-face card-back">
 <h2 id="typeText"></h2>
 </div>
 
 </div>
-
 </div>
 
 </div>
