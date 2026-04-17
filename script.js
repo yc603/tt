@@ -282,28 +282,29 @@ btn.style.display="inline-block";
 /* ===== 第五幕 ===== */
 function startPhotos(){
 
-/* 清除旧照片层 */
 let old = document.querySelector(".photos");
 if(old) old.remove();
 
-/* 建立照片层 */
 const wrap = document.createElement("div");
 wrap.className = "photos";
 document.getElementById("p5").appendChild(wrap);
 
-/* 33张照片名称 */
+/* 50张照片 */
 const photos = [
-"1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg",
-"7.jpg","8.jpg","9.jpg","10.jpg","11.jpg",
-"12.jpg","13.jpg","14.jpg","15.jpg","16.jpg",
-"17.jpg","18.jpg","19.jpg","20.jpg","21.jpg",
-"22.jpg","23.jpg","24.jpg","25.jpg","26.jpg",
-"27.jpg","28.jpg","29.jpg","30.jpg","31.jpg",
-"32.jpg","33.jpg"
+"1.jpg","2.jpg","3.jpg","4.jpg","5.jpg",
+"6.jpg","7.jpg","8.jpg","9.jpg","10.jpg",
+"11.jpg","12.jpg","13.jpg","14.jpg","15.jpg",
+"16.jpg","17.jpg","18.jpg","19.jpg","20.jpg",
+"21.jpg","22.jpg","23.jpg","24.jpg","25.jpg",
+"26.jpg","27.jpg","28.jpg","29.jpg","30.jpg",
+"31.jpg","32.jpg","33.jpg","34.jpg","35.jpg",
+"36.jpg","37.jpg","38.jpg","39.jpg","40.jpg",
+"41.jpg","42.jpg","43.jpg","44.jpg","45.jpg",
+"46.jpg","47.jpg","48.jpg","49.jpg","50.jpg"
 ];
 
-/* 掉落照片 */
-for(let i=0;i<33;i++){
+/* 掉落50张 */
+for(let i=0;i<50;i++){
 
 let box = document.createElement("div");
 box.className = "photo";
@@ -322,17 +323,17 @@ style="background-image:url('images/${photos[i]}')">
 wrap.appendChild(box);
 }
 
-/* 明信片文字 */
+/* 打字 */
 let text="生日快乐🎂\n绿老头🥸";
 let el=document.getElementById("typeText");
 
-let i=0;
+let n=0;
 el.innerHTML="";
 
 let t=setInterval(()=>{
-el.innerHTML += text[i]==="\n" ? "<br>" : text[i];
-i++;
-if(i>=text.length) clearInterval(t);
+el.innerHTML += text[n]==="\n" ? "<br>" : text[n];
+n++;
+if(n>=text.length) clearInterval(t);
 },120);
 
 }
