@@ -293,49 +293,63 @@ let photos = [
 "img/46.jpg","img/47.jpg","img/48.jpg","img/49.jpg","img/50.jpg"
 ];
 
-let index = 0;
-let perPage = 6;
+let pageIndex = 0;
+let perPage = 8; // 一页8张（4左 + 4右）
 
 function startPhotos(){
-    renderPage();
+renderBook();
 
-    setInterval(()=>{
-        flipPage();
-    },3500);
+setInterval(()=>{
+flipBook();
+},3000);
 }
 
-/* 渲染当前页 */
-function renderPage(){
-    let grid = document.getElementById("photoGrid");
-    grid.innerHTML = "";
+/* 渲染书本 */
+function renderBook(){
 
-    let start = index * perPage;
-    let pagePhotos = photos.slice(start, start + perPage);
+let left = document.getElementById("leftPage");
+let right = document.getElementById("rightPage");
 
-    pagePhotos.forEach(src=>{
-        let div = document.createElement("div");
-        div.className = "photo";
-        div.style.backgroundImage = `url('${src}')`;
-        grid.appendChild(div);
-    });
+left.innerHTML = "";
+right.innerHTML = "";
+
+let start = pageIndex * perPage;
+let pagePhotos = photos.slice(start, start + perPage);
+
+/* 左页 4张 */
+pagePhotos.slice(0,4).forEach(src=>{
+let img = document.createElement("img");
+img.src = src;
+left.appendChild(img);
+});
+
+/* 右页 4张 */
+pagePhotos.slice(4,8).forEach(src=>{
+let img = document.createElement("img");
+img.src = src;
+right.appendChild(img);
+});
 }
 
-/* 翻页动画 */
-function flipPage(){
+/* 翻书 */
+function flipBook(){
 
-    let page = document.getElementById("page");
-    page.classList.add("flip");
+let book = document.getElementById("book");
+book.classList.add("flip");
 
-    setTimeout(()=>{
-        index++;
-        if(index * perPage >= photos.length){
-            index = 0;
-        }
+setTimeout(()=>{
 
-        renderPage();
-        page.classList.remove("flip");
+pageIndex++;
 
-    },600);
+if(pageIndex * perPage >= photos.length){
+pageIndex = 0;
+}
+
+renderBook();
+
+book.classList.remove("flip");
+
+},700);
 }
 
 window.onload = function(){
