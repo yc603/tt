@@ -315,8 +315,8 @@ opacity:1;
 /* ===== 明信片 ===== */
 .postcard{
 position:relative;
-width:320px;
-height:220px;
+width:380px;
+height:260px;
 border-radius:18px;
 overflow:hidden;
 
@@ -377,8 +377,8 @@ height:210px;
 }
 
 .postcard{
-width:280px;
-height:190px;
+width:320px;
+height:220px;
 }
 
 .letter-paper{
