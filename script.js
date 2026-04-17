@@ -68,57 +68,103 @@ function initCake3D(){
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75,1,0.1,1000);
-const renderer = new THREE.WebGLRenderer({alpha:true});
+const renderer = new THREE.WebGLRenderer({alpha:true, antialias:true});
 renderer.setSize(300,300);
 
 document.getElementById("cake3d").innerHTML="";
 document.getElementById("cake3d").appendChild(renderer.domElement);
 
-/* ===== 三层蛋糕 ===== */
-const material1 = new THREE.MeshPhongMaterial({color:0xffb6c1});
-const material2 = new THREE.MeshPhongMaterial({color:0xff69b4});
-const material3 = new THREE.MeshPhongMaterial({color:0xff85a2});
+/* 光线 */
+const light = new THREE.PointLight(0xffffff,1.2);
+light.position.set(3,5,5);
+scene.add(light);
 
-const layer1 = new THREE.Mesh(new THREE.CylinderGeometry(1.5,1.5,0.8,32), material1);
-const layer2 = new THREE.Mesh(new THREE.CylinderGeometry(1.1,1.1,0.7,32), material2);
-const layer3 = new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,0.6,32), material3);
+const ambient = new THREE.AmbientLight(0xffffff,0.8);
+scene.add(ambient);
 
-layer2.position.y = 0.8;
-layer3.position.y = 1.5;
-
-scene.add(layer1, layer2, layer3);
-
-/* 蜡烛 */
-const candle = new THREE.Mesh(
-new THREE.CylinderGeometry(0.08,0.08,0.6,16),
-new THREE.MeshBasicMaterial({color:0xffffff})
+/* ===== 蛋糕底层（粉色） ===== */
+const layer1 = new THREE.Mesh(
+new THREE.CylinderGeometry(1.4,1.4,0.8,32),
+new THREE.MeshPhongMaterial({color:0xff8fb1})
 );
-candle.position.y = 2;
+layer1.position.y = -0.8;
+scene.add(layer1);
+
+/* ===== 中层（黄色） ===== */
+const layer2 = new THREE.Mesh(
+new THREE.CylinderGeometry(1.1,1.1,0.7,32),
+new THREE.MeshPhongMaterial({color:0xffe066})
+);
+layer2.position.y = 0;
+scene.add(layer2);
+
+/* ===== 顶层（蓝色） ===== */
+const layer3 = new THREE.Mesh(
+new THREE.CylinderGeometry(0.8,0.8,0.6,32),
+new THREE.MeshPhongMaterial({color:0x7ed6ff})
+);
+layer3.position.y = 0.75;
+scene.add(layer3);
+
+/* ===== 彩色奶油球装饰 ===== */
+const creamColors = [
+0xff4d6d, // 红
+0xffd166, // 黄
+0x06d6a0, // 绿
+0x118ab2, // 蓝
+0xffffff  // 白
+];
+
+for(let i=0;i<10;i++){
+
+const ball = new THREE.Mesh(
+new THREE.SphereGeometry(0.08,16,16),
+new THREE.MeshPhongMaterial({
+color: creamColors[i % creamColors.length]
+})
+);
+
+let angle = (i / 10) * Math.PI * 2;
+ball.position.x = Math.cos(angle) * 0.7;
+ball.position.z = Math.sin(angle) * 0.7;
+ball.position.y = 1.1;
+
+scene.add(ball);
+}
+
+/* ===== 蜡烛 ===== */
+const candle = new THREE.Mesh(
+new THREE.CylinderGeometry(0.06,0.06,0.6,16),
+new THREE.MeshPhongMaterial({color:0xffffff})
+);
+candle.position.y = 1.55;
 scene.add(candle);
 
-/* 火焰 */
+/* ===== 火焰 ===== */
 flame = new THREE.Mesh(
-new THREE.SphereGeometry(0.12,16,16),
+new THREE.SphereGeometry(0.09,16,16),
 new THREE.MeshBasicMaterial({color:0xff6600})
 );
-flame.position.y = 2.5;
+flame.position.y = 1.95;
 scene.add(flame);
-
-/* 灯光（让蛋糕更立体） */
-const light = new THREE.PointLight(0xffffff,1);
-light.position.set(5,5,5);
-scene.add(light);
 
 camera.position.z = 5;
 
+/* 动画 */
 function animate(){
 requestAnimationFrame(animate);
+
 layer1.rotation.y += 0.005;
 layer2.rotation.y += 0.005;
 layer3.rotation.y += 0.005;
+
+flame.scale.y = 1 + Math.sin(Date.now()*0.01)*0.15;
+
 renderer.render(scene,camera);
 }
+
 animate();
+}
 }
 
 /* 吹蜡烛 */
