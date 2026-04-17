@@ -323,6 +323,14 @@ style="background-image:url('images/${photos[i]}')">
 wrap.appendChild(box);
 }
 
+setTimeout(()=>{
+document.querySelectorAll(".photo").forEach((el,i)=>{
+setTimeout(()=>{
+el.classList.add("show");
+}, i*80);
+});
+},500);
+
 /* 打字 */
 let text="生日快乐🎂\n绿老头🥸";
 let el=document.getElementById("typeText");
