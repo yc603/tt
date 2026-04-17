@@ -318,6 +318,7 @@ if(i>=text.length) clearInterval(t);
 
 window.onload = function(){
 
+/* 进入按钮 */
 document.getElementById("startBtn").addEventListener("click",function(){
 go(2);
 
@@ -327,12 +328,17 @@ music.play().catch(()=>{});
 }
 });
 
-/* ⭐⭐⭐ 这里加明信片点击事件 ⭐⭐⭐ */
+/* 明信片点击 */
 const card = document.getElementById("card");
+
+if(card){
+card.addEventListener("click", function(){
 
 if(!card.classList.contains("flipped")){
 card.classList.add("flipped");
 typeLetter();
+}
+
 });
 }
 
