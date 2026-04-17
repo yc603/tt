@@ -118,7 +118,7 @@ scene.add(layer1);
 /* ===== 中层（黄色） ===== */
 const layer2 = new THREE.Mesh(
 new THREE.CylinderGeometry(1.1,1.1,0.7,32),
-new THREE.MeshPhongMaterial({color:0xffe066})
+new THREE.MeshPhongMaterial({color:0xff9466})
 );
 layer2.position.y = 0;
 scene.add(layer2);
@@ -126,7 +126,7 @@ scene.add(layer2);
 /* ===== 顶层（蓝色） ===== */
 const layer3 = new THREE.Mesh(
 new THREE.CylinderGeometry(0.8,0.8,0.6,32),
-new THREE.MeshPhongMaterial({color:0x7ed6ff})
+new THREE.MeshPhongMaterial({color:0xd2ff66})
 );
 layer3.position.y = 0.75;
 scene.add(layer3);
@@ -208,7 +208,7 @@ setTimeout(typeLetter,300);
 /* 打字信 */
 function typeLetter(){
 
-let text = "2026年4月17日，本人一边修改代码一边躲避老板的目光，要是被抓现行就完犊子了😵。不过放心，本人不会允许这种事情发生✋🏿，我可是很谨慎的人😏\n祝你生日快乐🎂\n愿你每天都开心\n愿所有美好都属于你💖\n很可惜今天不能陪你过生日，虽然可能也没有很可惜😯~但是我的心意还是有的，务必查收✉";
+let text = "2026年4月17日，本人一边修改代码一边躲避老板的目光，要是被抓现行就完犊子了😵。不过放心，本人不会允许这种事情发生✋🏿，我可是很谨慎的人😏\n祝你生日快乐🎂\n谢谢你一直这么包容我\n愿你每天都开心💖\n很可惜今天不能陪你过生日，虽然可能也没有很可惜😯~但是我的心意还是有的，请务必查收✉";
 
 let el = document.getElementById("letterText");
 let btn = document.getElementById("nextBtn");
