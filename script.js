@@ -208,7 +208,7 @@ setTimeout(typeLetter,300);
 /* 打字信 */
 function typeLetter(){
 
-let text = "2026年4月17日，本人一边修改代码一边躲避老板的目光\n要是被抓现行就完犊子了😵\n不过放心，本人不会允许这种事情发生✋🏿，我可是很谨慎的人😏\n祝你生日快乐🎂\n愿你每天都开心\n愿所有美好都属于你💖\n很可惜今天不能陪你过生日，虽然可能也没有很可惜😯\n但是我的心意还是有的，务必查收✉";
+let text = "2026年4月17日，本人一边修改代码一边躲避老板的目光，要是被抓现行就完犊子了😵。不过放心，本人不会允许这种事情发生✋🏿，我可是很谨慎的人😏\n祝你生日快乐🎂\n愿你每天都开心\n愿所有美好都属于你💖\n很可惜今天不能陪你过生日，虽然可能也没有很可惜😯~但是我的心意还是有的，务必查收✉";
 
 let el = document.getElementById("letterText");
 let btn = document.getElementById("nextBtn");
@@ -241,7 +241,7 @@ document.getElementById("photos").appendChild(d);
 }
 
 /* 打字 */
-let text="生日快乐🎂，年过半半百了，是一位成熟的大人，可以进行一些适当的社交，比如跟可爱的同事一起耍🥰";
+let text="生日快乐🎂\n绿老头🥸";
 let el=document.getElementById("typeText");
 
 let i=0;
