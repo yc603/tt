@@ -16,23 +16,27 @@ const questions = [
 
 /* ===== 页面切换 ===== */
 function go(n){
-
-/* 先切页 */
+/* 切页 */
 document.querySelectorAll('.page').forEach(p=>{
-p.classList.remove('active');
+    p.classList.remove('active');
 });
 
 document.getElementById('p'+n).classList.add('active');
 
-/* 再播放音乐（失败也不中断） */
-if(n === 2){
 let music = document.getElementById("bgm");
 
-if(music){
-music.play().catch(err=>{
-console.log("音乐播放失败，但不影响跳转");
-});
+/* 第二幕开始播放音乐 */
+if(n === 2){
+    if(music){
+        music.play().catch(()=>{});
+    }
 }
+
+/* 第五幕暂停音乐（视频页） */
+if(n === 5){
+    if(music){
+        music.pause();
+    }
 }
 
 /* 各页面功能 */
