@@ -232,25 +232,23 @@ scene.add(berry);
 }
 
 /* 蜡烛 */
+const candleHeight = 1.6;
+
 const candle = new THREE.Mesh(
-new THREE.CylinderGeometry(0.06,0.06,1.6,20),
-new THREE.MeshPhongMaterial({
-color:0xff69b4
-})
+new THREE.CylinderGeometry(0.06,0.06,candleHeight,20),
+new THREE.MeshPhongMaterial({ color:0xff69b4 })
 );
 
-candle.position.y=2.95;
+candle.position.y = 2.0;
 scene.add(candle);
 
-/* 火焰 */
+/* 火焰永远贴在蜡烛顶端 */
 flame = new THREE.Mesh(
 new THREE.SphereGeometry(0.14,16,16),
-new THREE.MeshBasicMaterial({
-color:0xff9900
-})
+new THREE.MeshBasicMaterial({ color:0xff9900 })
 );
 
-flame.position.y=2.95;
+flame.position.y = candle.position.y + candleHeight/2 + 0.25;
 scene.add(flame);
 
 /* 动画 */
