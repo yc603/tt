@@ -103,31 +103,15 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(45,1,0.1,1000);
 camera.position.set(0,3.2,8.5);   // 拉远镜头
 
-const container = document.getElementById("cakeWrap");
-
 const renderer = new THREE.WebGLRenderer({
-    alpha:true,
-    antialias:true
+alpha:true,
+antialias:true
 });
 
-renderer.setSize(320, 320);
-renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(320,320);
 
-container.innerHTML = "";
-container.appendChild(renderer.domElement);
-    
-const container = document.getElementById("cakeWrap");
-
-const renderer = new THREE.WebGLRenderer({
-    alpha:true,
-    antialias:true
-});
-
-renderer.setSize(320, 320);
-renderer.setPixelRatio(window.devicePixelRatio);
-
-container.innerHTML = "";
-container.appendChild(renderer.domElement);
+document.getElementById("cake3d").innerHTML="";
+document.getElementById("cake3d").appendChild(renderer.domElement);
 
 /* 光线 */
 const light1 = new THREE.PointLight(0xffffff,2.2);
