@@ -111,7 +111,7 @@ antialias:true
 renderer.setSize(320,320);
 
 document.getElementById("cake3d").innerHTML="";
-document.getElementById("cake3d").appendChild(renderer.domElement);
+document.getElementById("cakeWrap").appendChild(renderer.domElement);
 
 /* 光线 */
 const light1 = new THREE.PointLight(0xffffff,2.2);
