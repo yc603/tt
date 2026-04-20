@@ -87,10 +87,22 @@ max-width:420px;
 
 background:rgba(255,255,255,.18);
 backdrop-filter:blur(12px);
-border-radius:20px;
+-webkit-backdrop-filter:blur(12px);
 
+border-radius:20px;
 padding:20px;
 box-shadow:0 10px 25px rgba(0,0,0,.12);
+
+/* 初始隐藏 */
+opacity:0;
+transform:translateY(25px) scale(.95);
+transition:all .8s ease;
+}
+
+/* 第二页激活时一起出现 */
+#p2.active #options{
+opacity:1;
+transform:translateY(0) scale(1);
 }
 
 label{
