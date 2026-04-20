@@ -233,13 +233,13 @@ scene.add(berry);
 
 /* 蜡烛 */
 const candle = new THREE.Mesh(
-new THREE.CylinderGeometry(0.07,0.07,0.7,16),
+new THREE.CylinderGeometry(0.06,0.06,1.6,20),
 new THREE.MeshPhongMaterial({
 color:0xff69b4
 })
 );
 
-candle.position.y=2.0;
+candle.position.y=2.35;
 scene.add(candle);
 
 /* 火焰 */
@@ -250,7 +250,7 @@ color:0xff9900
 })
 );
 
-flame.position.y=2.45;
+flame.position.y=2.95;
 scene.add(flame);
 
 /* 动画 */
